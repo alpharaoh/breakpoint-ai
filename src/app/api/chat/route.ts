@@ -1,4 +1,4 @@
-import { openai } from "@ai-sdk/openai";
+import { google } from "@ai-sdk/google";
 import { jsonSchema, streamText } from "ai";
 
 export const runtime = "edge";
@@ -8,7 +8,7 @@ export async function POST(req: Request) {
   const { messages, system, tools } = await req.json();
 
   const result = streamText({
-    model: openai("gpt-4o"),
+    model: google("gemini-2.0-flash"),
     messages,
     // forward system prompt and tools from the frontend
     system,

@@ -1,3 +1,9 @@
+import { Assistant } from "@/app/assistant";
+
 export default function Home() {
-  return <div className="bg-gray-200">Hello, world</div>;
+  return (
+    <div className="bg-primary-foreground">
+      <Assistant />
+    </div>
+  );
 }
