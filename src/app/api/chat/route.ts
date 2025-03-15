@@ -11,7 +11,7 @@ const systemPrompt = `
 `;
 
 export async function POST(req: Request) {
-  const { messages, system, tools } = await req.json();
+  const { messages, tools } = await req.json();
 
   const result = streamText({
     model: google("gemini-2.0-flash"),
