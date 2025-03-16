@@ -16,6 +16,10 @@ export const upsertThread = async (
   await db.threads.put({ id, name, messages });
 };
 
+export const deleteThread = async (id: string) => {
+  await db.threads.delete(id);
+};
+
 export const getThread = async (id: string) => {
   return await db.threads.get(id);
 };
