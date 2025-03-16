@@ -22,7 +22,7 @@ export const ThreadList: FC = () => {
           src="/breakpoint.svg"
           alt="Breakpoint"
           width={110}
-          height={100}
+          height={22}
           className="mb-2"
         />
       </Link>
