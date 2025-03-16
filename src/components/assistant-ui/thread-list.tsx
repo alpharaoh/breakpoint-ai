@@ -11,6 +11,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLiveQuery } from "dexie-react-hooks";
 import { deleteThread, getThreads } from "@/lib/chat-service";
+import { usePathname, useRouter } from "next/navigation";
+import { getThreadId } from "@/lib/get-thread-id";
 
 export const ThreadList: FC = () => {
   return (
@@ -71,10 +73,18 @@ const ThreadListItem: FC<{ id: string; name: string }> = ({ id, name }) => {
 };
 
 const ThreadListItemArchive: FC<{ id: string }> = ({ id }) => {
+  const pathname = usePathname();
+  const router = useRouter();
+
   const handleDelete: MouseEventHandler = (e) => {
     e.preventDefault();
 
     deleteThread(id);
+
+    const currentThreadId = getThreadId(pathname);
+    if (currentThreadId === id) {
+      router.replace("/");
+    }
   };
 
   return (
