@@ -1,9 +1,10 @@
-import Dexie, { Transaction, type EntityTable } from "dexie";
+import { type Message } from "ai";
+import Dexie, { type EntityTable } from "dexie";
 
 interface Thread {
   id: number;
   name: string;
-  messages: string; // json blob
+  messages: Message[];
 }
 
 const db = new Dexie("breakpoints-db") as Dexie & {
@@ -11,13 +12,7 @@ const db = new Dexie("breakpoints-db") as Dexie & {
 };
 
 // Schema declaration:
-db.version(1).stores({
-  threads: "++id, name, messages", // primary key "id" (for the runtime!)
-});
-
-// db.on("populate", (tx: Transaction) => {
-//   tx.table("threads").add({ id: 1, name: "New Thread", messages: "[]" });
-// });
+db.version(1).stores({ threads: "++id" });
 
 export type { Thread };
 export { db };

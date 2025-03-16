@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
+import { Message } from "ai";
 
-export const createThread = async (name: string, messages: string) => {
+export const createThread = async (name: string, messages: Message[]) => {
   const id = await db.threads.add({ name, messages });
 
   return id;
@@ -9,7 +10,7 @@ export const createThread = async (name: string, messages: string) => {
 export const upsertThread = async (
   id: number,
   name: string,
-  messages: string,
+  messages: Message[],
 ) => {
   await db.threads.put({ id, name, messages });
 };

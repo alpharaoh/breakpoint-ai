@@ -4,7 +4,7 @@ import {
   ComposerPrimitive,
   MessagePrimitive,
   ThreadPrimitive,
-  useThreadRuntime,
+  useAssistantRuntime,
 } from "@assistant-ui/react";
 import { useEffect, type FC } from "react";
 import {
@@ -22,61 +22,46 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { MarkdownText } from "@/components/assistant-ui/markdown-text";
 import { TooltipIconButton } from "@/components/assistant-ui/tooltip-icon-button";
+import { createThread, getThread, upsertThread } from "@/lib/chat-service";
+import { useLiveQuery } from "dexie-react-hooks";
+import { usePathname, useRouter } from "next/navigation";
+import { Message } from "ai";
+import { getThreadId } from "@/lib/get-thread-id";
 
 export const Thread: FC = () => {
-  const runtime = useThreadRuntime();
+  const pathname = usePathname();
+  const navigate = useRouter();
+  const threads = useAssistantRuntime().thread;
 
-  // useEffect(() => {
-  //   runtime.subscribe(() => {
-  //     const runTimeState = runtime.getState();
-  //
-  //     if (runTimeState.isRunning) return;
-  //
-  //     fetch("/api/chat/generate_title", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         messages: runTimeState.messages,
-  //       }),
-  //     })
-  //       .then((res) => {
-  //         const reader = res.body?.getReader();
-  //         if (!reader) return;
-  //
-  //         const decoder = new TextDecoder();
-  //         let buffer = "";
-  //
-  //         function processChunk({
-  //           done,
-  //           value,
-  //         }: ReadableStreamReadResult<Uint8Array>) {
-  //           if (done) {
-  //             console.log(JSON.parse(buffer));
-  //             return;
-  //           }
-  //
-  //           buffer += decoder.decode(value, { stream: true });
-  //           const lines = buffer.split("\n");
-  //           buffer = lines.pop() || "";
-  //
-  //           lines.forEach((line) => {
-  //             if (line.trim()) {
-  //               console.log(JSON.parse(line));
-  //             }
-  //           });
-  //
-  //           reader?.read().then(processChunk);
-  //         }
-  //
-  //         reader.read().then(processChunk);
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error:", error);
-  //       });
-  //   });
-  // }, [runtime]);
+  const currentThread = useLiveQuery(() => {
+    const threadId = getThreadId(pathname);
+
+    return getThread(threadId);
+  });
+
+  useEffect(() => {
+    threads.unstable_on("run-end", async () => {
+      const threadsState = threads.getState();
+
+      const convertedMessages: Message[] = threadsState.messages.map(
+        (message) => {
+          return {
+            id: message.id,
+            content: JSON.stringify(message.content),
+            role: message.role,
+          };
+        },
+      );
+
+      if (!currentThread) {
+        const newThreadId = await createThread("New Chat", convertedMessages);
+        // Redirect to the new thread
+        navigate.replace(`/${newThreadId}`);
+      } else {
+        upsertThread(currentThread!.id, currentThread!.name, convertedMessages);
+      }
+    });
+  }, [threads, currentThread, navigate]);
 
   return (
     <ThreadPrimitive.Root

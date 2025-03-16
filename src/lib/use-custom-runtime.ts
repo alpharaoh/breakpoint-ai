@@ -13,14 +13,14 @@ import {
 import { useLiveQuery } from "dexie-react-hooks";
 import { Thread } from "@/lib/db";
 
-const backendApi = async (input: string) => {
+const backendApi = async ({ messages }: { messages: ThreadMessageLike[] }) => {
   try {
     const response = await fetch("/api/chat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ message: input }),
+      body: JSON.stringify({ messages }),
     });
 
     if (!response.ok) {
@@ -72,7 +72,7 @@ export const useCustomRuntime = ({}) => {
     await upsertThread(thread.id, thread.name, JSON.stringify(newMessages));
 
     setIsRunning(true);
-    const assistantMessage = await backendApi(input);
+    const assistantMessage = await backendApi({ messages: newMessages });
 
     const newMessagesAfterGeneration = [...newMessages, assistantMessage];
     await upsertThread(
