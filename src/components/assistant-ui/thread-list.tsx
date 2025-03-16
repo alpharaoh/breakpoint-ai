@@ -8,17 +8,20 @@ import { ArchiveIcon, PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TooltipIconButton } from "@/components/assistant-ui/tooltip-icon-button";
 import Image from "next/image";
+import Link from "next/link";
 
 export const ThreadList: FC = () => {
   return (
     <ThreadListPrimitive.Root className="flex flex-col items-stretch gap-1.5">
-      <Image
-        src="/breakpoint.svg"
-        alt="Breakpoint"
-        width={110}
-        height={100}
-        className="mb-2"
-      />
+      <Link href="/" className="cursor-pointer">
+        <Image
+          src="/breakpoint.svg"
+          alt="Breakpoint"
+          width={110}
+          height={100}
+          className="mb-2"
+        />
+      </Link>
       <ThreadListNew />
       <ThreadListItems />
     </ThreadListPrimitive.Root>
