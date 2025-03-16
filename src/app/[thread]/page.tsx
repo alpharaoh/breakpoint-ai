@@ -4,7 +4,7 @@ import { Assistant } from "@/app/assistant";
 import { ThreadMessageLike } from "@assistant-ui/react";
 import { usePathname } from "next/navigation";
 import { getThreadId } from "@/lib/get-thread-id";
-import { getThread } from "@/lib/chat-service";
+import { getThread, upsertThread } from "@/lib/chat-service";
 import { type Thread } from "@/lib/db";
 import { useEffect, useState } from "react";
 
@@ -25,6 +25,20 @@ export default function Thread() {
     };
     getThreadFunc();
   }, [pathname]);
+
+  useEffect(() => {
+    const generateTitle = async () => {
+      if (currentThread && currentThread.name === "New Chat") {
+        const newThreadName = await fetch("/api/chat/generate_title", {
+          method: "POST",
+          body: JSON.stringify({ messages: currentThread.messages }),
+        }).then((res) => res.text());
+
+        upsertThread(currentThread.id, newThreadName, currentThread.messages);
+      }
+    };
+    generateTitle();
+  }, [currentThread]);
 
   if (loading) {
     return (

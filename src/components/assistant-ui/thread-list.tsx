@@ -64,7 +64,7 @@ const ThreadListItem: FC<{ id: string; name: string }> = ({ id, name }) => {
       href={`/${id}`}
       className="w-full cursor-pointer data-[active]:bg-muted hover:bg-muted focus-visible:bg-muted focus-visible:ring-ring flex items-center gap-2 rounded-lg transition-all focus-visible:outline-none focus-visible:ring-2"
     >
-      <ThreadListItemPrimitive.Trigger className="flex-grow px-3 py-2 text-start text-sm">
+      <ThreadListItemPrimitive.Trigger className="flex-grow px-3 py-2 text-start text-sm truncate">
         {name ?? "New Chat"}
       </ThreadListItemPrimitive.Trigger>
       <ThreadListItemArchive id={id} />

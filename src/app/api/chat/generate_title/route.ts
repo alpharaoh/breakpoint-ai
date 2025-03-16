@@ -1,5 +1,5 @@
 import { google } from "@ai-sdk/google";
-import { streamText } from "ai";
+import { generateText } from "ai";
 
 export const runtime = "edge";
 export const maxDuration = 30;
@@ -17,10 +17,10 @@ export async function POST(req: Request) {
     return new Response("No user message found", { status: 400 });
   }
 
-  const result = streamText({
+  const result = await generateText({
     model: google("gemini-2.0-flash"),
     messages: [{ role: "system", content: systemPrompt }, firstMessage],
   });
 
-  return result.toDataStreamResponse();
+  return new Response(result.text);
 }
