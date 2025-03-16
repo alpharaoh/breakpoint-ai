@@ -3,5 +3,5 @@ export const getThreadId = (pathname: string) => {
     return 1;
   }
 
-  return parseInt(pathname.split("/")[1]);
+  return pathname.split("/")[1];
 };
