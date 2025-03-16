@@ -4,8 +4,9 @@ import {
   ComposerPrimitive,
   MessagePrimitive,
   ThreadPrimitive,
+  useThreadRuntime,
 } from "@assistant-ui/react";
-import type { FC } from "react";
+import { useEffect, type FC } from "react";
 import {
   ArrowDownIcon,
   CheckIcon,
@@ -23,6 +24,61 @@ import { MarkdownText } from "@/components/assistant-ui/markdown-text";
 import { TooltipIconButton } from "@/components/assistant-ui/tooltip-icon-button";
 
 export const Thread: FC = () => {
+  const runtime = useThreadRuntime();
+
+  useEffect(() => {
+    runtime.subscribe(() => {
+      const runTimeState = runtime.getState();
+
+      if (runTimeState.isRunning) return;
+
+      fetch("/api/chat/generate_title", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          messages: runTimeState.messages,
+          tools: {},
+        }),
+      })
+        .then((res) => {
+          const reader = res.body?.getReader();
+          if (!reader) return;
+
+          const decoder = new TextDecoder();
+          let buffer = "";
+
+          function processChunk({
+            done,
+            value,
+          }: ReadableStreamReadResult<Uint8Array>) {
+            if (done) {
+              console.log(JSON.parse(buffer));
+              return;
+            }
+
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split("\n");
+            buffer = lines.pop() || "";
+
+            lines.forEach((line) => {
+              if (line.trim()) {
+                console.log(JSON.parse(line));
+              }
+            });
+
+            reader?.read().then(processChunk);
+          }
+
+          reader.read().then(processChunk);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    });
+  }, [runtime]);
+
   return (
     <ThreadPrimitive.Root
       className="bg-background box-border flex h-full flex-col overflow-hidden"
