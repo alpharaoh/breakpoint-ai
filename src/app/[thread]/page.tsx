@@ -1,45 +1,30 @@
-"use client";
 import { Assistant } from "@/app/assistant";
 
 import { ThreadMessageLike } from "@assistant-ui/react";
-import { usePathname } from "next/navigation";
 import { getThreadId } from "@/lib/get-thread-id";
 import { getThread } from "@/lib/chat-service";
 import { type Thread } from "@/lib/db";
-import { useEffect, useState } from "react";
+import { headers } from "next/headers";
 
-export default function Thread() {
-  const pathname = usePathname();
-  const [currentThread, setCurrentThread] = useState<Thread>();
-  const [loading, setLoading] = useState<boolean>(true);
+export default async function Thread() {
+  const headerList = await headers();
 
-  useEffect(() => {
-    const getThreadFunc = async () => {
-      const threadId = getThreadId(pathname);
-      try {
-        const thread = await getThread(threadId);
-        setCurrentThread(thread);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getThreadFunc();
-  }, [pathname]);
+  const pathname = headerList.get("x-current-path");
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  const threadId = getThreadId(pathname ?? "");
+  const thread = await getThread(threadId);
 
-  if (!currentThread) {
+  if (!thread) {
     return <div>Thread not found</div>;
   }
 
-  const initialMessages: ThreadMessageLike[] =
-    currentThread?.messages?.map((message) => ({
+  const initialMessages: ThreadMessageLike[] = thread.messages.map(
+    (message) => ({
       id: message.id,
       role: message.role as "user" | "assistant",
       content: JSON.parse(message.content),
-    })) ?? [];
+    }),
+  );
 
   return (
     <div className="bg-primary-foreground">
