@@ -125,7 +125,7 @@ const ThreadWelcomeSuggestions: FC = () => {
   return (
     <div className="mt-3 flex w-full items-stretch justify-center gap-4">
       <ThreadPrimitive.Suggestion
-        className="hover:bg-muted/80 flex max-w-sm grow basis-0 flex-col items-center justify-center rounded-lg border p-3 transition-colors ease-in"
+        className="cursor-pointer hover:bg-muted/80 flex max-w-sm grow basis-0 flex-col items-center justify-center rounded-lg border p-3 transition-colors ease-in"
         prompt="What are Cloudflare Workers?"
         method="replace"
         autoSend
@@ -135,7 +135,7 @@ const ThreadWelcomeSuggestions: FC = () => {
         </span>
       </ThreadPrimitive.Suggestion>
       <ThreadPrimitive.Suggestion
-        className="hover:bg-muted/80 flex max-w-sm grow basis-0 flex-col items-center justify-center rounded-lg border p-3 transition-colors ease-in"
+        className="cursor-pointer hover:bg-muted/80 flex max-w-sm grow basis-0 flex-col items-center justify-center rounded-lg border p-3 transition-colors ease-in"
         prompt="When are message queues helpful?"
         method="replace"
         autoSend

@@ -1,4 +1,4 @@
-import type { ChangeEvent, FC, MouseEventHandler } from "react";
+import type { FC, MouseEventHandler } from "react";
 import {
   ThreadListItemPrimitive,
   ThreadListPrimitive,
