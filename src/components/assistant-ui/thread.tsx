@@ -40,7 +40,7 @@ export const Thread: FC = () => {
   });
 
   useEffect(() => {
-    threads.unstable_on("run-end", async () => {
+    return threads.unstable_on("run-end", async () => {
       const threadsState = threads.getState();
 
       const convertedMessages: Message[] = threadsState.messages.map(

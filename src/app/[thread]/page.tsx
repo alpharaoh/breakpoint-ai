@@ -20,7 +20,7 @@ export default function Thread() {
     currentThread?.messages?.map((message) => ({
       id: message.id,
       role: message.role as "user" | "assistant",
-      content: message.content,
+      content: JSON.parse(message.content),
     })) ?? [];
 
   if (!currentThread) {
