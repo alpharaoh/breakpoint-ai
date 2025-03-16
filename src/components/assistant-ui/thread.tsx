@@ -39,7 +39,6 @@ export const Thread: FC = () => {
         },
         body: JSON.stringify({
           messages: runTimeState.messages,
-          tools: {},
         }),
       })
         .then((res) => {
