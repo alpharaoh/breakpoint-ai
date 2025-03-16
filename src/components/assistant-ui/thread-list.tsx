@@ -92,7 +92,7 @@ const ThreadListItemArchive: FC<{ id: string }> = ({ id }) => {
       onClick={handleDelete}
       className="hover:text-primary text-foreground ml-auto mr-3 size-4 p-0"
       variant="ghost"
-      tooltip="Archive thread"
+      tooltip="Delete thread"
     >
       <ArchiveIcon />
     </TooltipIconButton>
