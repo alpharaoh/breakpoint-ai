@@ -1,8 +1,9 @@
 "use client";
+import NextTopLoader from "nextjs-toploader";
 import { Assistant } from "@/app/assistant";
 
 import { ThreadMessageLike } from "@assistant-ui/react";
-import { notFound, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { getThreadId } from "@/lib/get-thread-id";
 import { getThread, upsertThread } from "@/lib/chat-service";
 import { type Thread } from "@/lib/db";
@@ -57,6 +58,7 @@ export default function Thread() {
 
   return (
     <div className="bg-primary-foreground h-screen">
+      <NextTopLoader />
       <Assistant initialMessages={initialMessages} />
     </div>
   );
