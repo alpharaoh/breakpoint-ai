@@ -24,21 +24,17 @@ export const Assistant: FC<AssistantProps> = ({ initialMessages }) => {
     initialMessages: initialMessages,
   });
 
-  const onLayout = (sizes: number[]) => {
-    document.cookie = `react-resizable-panels:layout=${JSON.stringify(sizes)}`;
-  };
-
   return (
     <AssistantRuntimeProvider runtime={runtime}>
       <ResizablePanelGroup
         direction="horizontal"
         className="grid h-dvh grid-cols-[200px_1fr] px-4 py-4 gap-2 h-full"
-        onLayout={onLayout}
+        autoSaveId="breakpoint"
       >
         <ResizablePanel className="h-full hidden lg:block" defaultSize={10}>
           <ThreadList />
         </ResizablePanel>
-        <ResizableHandle className="opacity-0" />
+        <ResizableHandle className="opacity-30 w-0.5 rounded-full" />
         <ResizablePanel className="h-full rounded-md" defaultSize={90}>
           <Thread />
         </ResizablePanel>
