@@ -60,7 +60,7 @@ export default function Thread() {
     })) ?? [];
 
   return (
-    <div className="bg-primary-foreground">
+    <div className="bg-primary-foreground h-screen">
       <Assistant initialMessages={initialMessages} />
     </div>
   );
