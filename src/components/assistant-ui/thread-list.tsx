@@ -52,7 +52,7 @@ const ThreadListItems: FC = () => {
   return (
     <div className="space-y-1.5">
       {currentThread
-        ?.toSorted((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
+        ?.toSorted((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
         .map((thread) => (
           <ThreadListItem key={thread.id} id={thread.id} name={thread.name} />
         ))}
