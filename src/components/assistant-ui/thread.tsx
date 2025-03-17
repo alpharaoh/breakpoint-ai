@@ -24,13 +24,12 @@ import { MarkdownText } from "@/components/assistant-ui/markdown-text";
 import { TooltipIconButton } from "@/components/assistant-ui/tooltip-icon-button";
 import { createThread, getThread, upsertThread } from "@/lib/chat-service";
 import { useLiveQuery } from "dexie-react-hooks";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Message } from "ai";
 import { getThreadId } from "@/lib/get-thread-id";
 
 export const Thread: FC = () => {
   const pathname = usePathname();
-  const navigate = useRouter();
   const threads = useAssistantRuntime().thread;
 
   const currentThread = useLiveQuery(() => {
