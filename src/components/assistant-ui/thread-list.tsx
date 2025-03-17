@@ -1,4 +1,4 @@
-import type { FC, MouseEventHandler } from "react";
+import { useState, type FC, type MouseEventHandler } from "react";
 import {
   ThreadListItemPrimitive,
   ThreadListPrimitive,
@@ -14,21 +14,100 @@ import { deleteThread, getThreads } from "@/lib/chat-service";
 import { usePathname, useRouter } from "next/navigation";
 import { getThreadId } from "@/lib/get-thread-id";
 import { v4 as uuidv4 } from "uuid";
+import { Check, ChevronsUpDown } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+const models = [
+  {
+    id: "gemini-2.0-flash",
+    name: "Gemini Flash 2",
+    logo: "/google.svg",
+  },
+];
+
+export function ModelSelector() {
+  const [selectedModel, setSelectedModel] = useState(models[0]);
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="flex w-full items-center justify-between gap-2 px-3 py-5 text-left"
+          disabled
+        >
+          <div className="flex items-center gap-3.5">
+            <div className="flex h-6 w-6 items-center justify-center rounded-full overflow-hidden">
+              <Image
+                src={selectedModel.logo || "/placeholder.svg"}
+                alt={selectedModel.name}
+                width={24}
+                height={24}
+                className="h-full w-full object-cover"
+              />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-sm">{selectedModel.name}</span>
+              <span className="text-xs text-muted-foreground">
+                {selectedModel.id}
+              </span>
+            </div>
+          </div>
+          <ChevronsUpDown className="h-4 w-4 opacity-50" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-[200px]" align="start">
+        {models.map((model) => (
+          <DropdownMenuItem
+            key={model.id}
+            onClick={() => setSelectedModel(model)}
+            className="flex items-center justify-between py-2"
+          >
+            <div className="flex items-center gap-3.5">
+              <div className="flex h-6 w-6 items-center justify-center rounded-full overflow-hidden">
+                <Image
+                  src={model.logo || "/placeholder.svg"}
+                  alt={model.name}
+                  width={24}
+                  height={24}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <span className="text-sm font-medium">{model.name}</span>
+            </div>
+            {selectedModel.id === model.id && <Check className="h-4 w-4" />}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
 
 export const ThreadList: FC = () => {
   return (
-    <ThreadListPrimitive.Root className="flex flex-col items-stretch gap-1.5">
-      <Link href={`/${uuidv4()}`} className="cursor-pointer">
-        <Image
-          src="/breakpoint.svg"
-          alt="Breakpoint"
-          width={110}
-          height={22}
-          className="mb-2"
-        />
-      </Link>
-      <ThreadListNew />
-      <ThreadListItems />
+    <ThreadListPrimitive.Root className="flex flex-col justify-between h-full">
+      <div className="flex flex-col items-stretch gap-1.5">
+        <Link href={`/${uuidv4()}`} className="cursor-pointer">
+          <Image
+            src="/breakpoint.svg"
+            alt="Breakpoint"
+            width={110}
+            height={22}
+            className="mb-2"
+          />
+        </Link>
+        <ThreadListNew />
+        <ThreadListItems />
+      </div>
+      <div className="mb-1.5">
+        <ModelSelector />
+      </div>
     </ThreadListPrimitive.Root>
   );
 };
