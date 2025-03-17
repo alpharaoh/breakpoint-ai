@@ -4,7 +4,7 @@ import { generateText } from "ai";
 export const runtime = "edge";
 export const maxDuration = 30;
 
-const systemPrompt = `You are given an initial conversation from a user and an AI LLM agent. You must summarise the content in 3-4 words`;
+const systemPrompt = `You are given an initial conversation from a user and an AI LLM agent. You must summarise the content in 3-4 words. Don't add a period to the end.`;
 
 export async function POST(req: Request) {
   const { messages } = await req.json();

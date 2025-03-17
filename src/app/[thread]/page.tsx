@@ -42,8 +42,8 @@ export default function Thread() {
 
   if (loading) {
     return (
-      <div className="grid h-dvh grid-cols-[200px_1fr] gap-x-2 px-4 py-4">
-        Loading...
+      <div className="w-screen h-screen bg-primary-foreground">
+        <Assistant />
       </div>
     );
   }
