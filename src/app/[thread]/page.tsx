@@ -43,7 +43,7 @@ export default function Thread() {
 
   if (loading) {
     return (
-      <div className="w-screen h-screen">
+      <div className="w-dvw h-dvh">
         <div className="w-60 h-full bg-primary-foreground"></div>
       </div>
     );
@@ -57,7 +57,7 @@ export default function Thread() {
     })) ?? [];
 
   return (
-    <div className="bg-primary-foreground h-screen">
+    <div className="bg-primary-foreground h-dvh">
       <NextTopLoader />
       <Assistant initialMessages={initialMessages} />
     </div>
