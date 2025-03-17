@@ -18,7 +18,7 @@ import { v4 as uuidv4 } from "uuid";
 export const ThreadList: FC = () => {
   return (
     <ThreadListPrimitive.Root className="flex flex-col items-stretch gap-1.5">
-      <Link href="/" className="cursor-pointer">
+      <Link href={`/${uuidv4()}`} className="cursor-pointer">
         <Image
           src="/breakpoint.svg"
           alt="Breakpoint"
@@ -35,7 +35,7 @@ export const ThreadList: FC = () => {
 
 const ThreadListNew: FC = () => {
   return (
-    <Link href="/">
+    <Link href={`/${uuidv4()}`}>
       <Button
         className="cursor-pointer w-full data-[active]:bg-muted hover:bg-muted flex items-center justify-start gap-1 rounded-lg px-2.5 py-2 text-start"
         variant="ghost"
