@@ -17,6 +17,7 @@ import {
   RefreshCwIcon,
   SendHorizontalIcon,
 } from "lucide-react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
@@ -117,7 +118,15 @@ const ThreadWelcome: FC = () => {
     <ThreadPrimitive.Empty>
       <div className="flex w-full max-w-[var(--thread-max-width)] flex-grow flex-col">
         <div className="flex w-full flex-grow flex-col items-center justify-center">
-          <p className="mt-4 font-medium">How can I help you today?</p>
+          <Image
+            src="/breakpoint.svg"
+            alt="Breakpoint"
+            width={110}
+            height={22}
+          />
+          <p className="mt-1 text-sm text-muted-foreground">
+            Your engineering growth partner
+          </p>
         </div>
         <ThreadWelcomeSuggestions />
       </div>
