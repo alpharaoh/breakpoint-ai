@@ -25,7 +25,7 @@ import {
 const models = [
   {
     id: "gemini-2.0-flash",
-    name: "Gemini Flash 2",
+    name: "Gemini 2.0 Flash",
     logo: "/google.svg",
   },
 ];
