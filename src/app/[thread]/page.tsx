@@ -42,8 +42,8 @@ export default function Thread() {
 
   if (loading) {
     return (
-      <div className="w-screen h-screen bg-primary-foreground">
-        <Assistant />
+      <div className="w-screen h-screen">
+        <div className="w-60 h-full bg-primary-foreground"></div>
       </div>
     );
   }
