@@ -43,14 +43,16 @@ export function ModelSelector() {
           disabled
         >
           <div className="flex items-center gap-3.5">
-            <div className="flex h-6 w-6 items-center justify-center rounded-full overflow-hidden">
-              <Image
-                src={selectedModel.logo || "/placeholder.svg"}
-                alt={selectedModel.name}
-                width={24}
-                height={24}
-                className="h-full w-full object-cover"
-              />
+            <div className="p-1.5 bg-white rounded-full">
+              <div className="flex h-6 w-6 items-center justify-center rounded-full overflow-hidden">
+                <Image
+                  src={selectedModel.logo || "/placeholder.svg"}
+                  alt={selectedModel.name}
+                  width={24}
+                  height={24}
+                  className="h-full w-full object-cover"
+                />
+              </div>
             </div>
             <div className="flex flex-col">
               <span className="text-sm">{selectedModel.name}</span>
