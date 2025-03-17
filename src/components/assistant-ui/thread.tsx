@@ -55,13 +55,18 @@ export const Thread: FC = () => {
 
       if (!currentThread) {
         const newThreadId = await createThread("New Chat", convertedMessages);
-        // Redirect to the new thread
-        navigate.replace(`/${newThreadId}`);
+
+        const newThreadName = await fetch("/api/chat/generate_title", {
+          method: "POST",
+          body: JSON.stringify({ messages: convertedMessages }),
+        }).then((res) => res.text());
+
+        upsertThread(newThreadId, newThreadName, convertedMessages);
       } else {
         upsertThread(currentThread!.id, currentThread!.name, convertedMessages);
       }
     });
-  }, [threads, currentThread, navigate]);
+  }, [threads, currentThread]);
 
   return (
     <ThreadPrimitive.Root

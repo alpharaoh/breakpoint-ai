@@ -5,6 +5,7 @@ interface Thread {
   id: string;
   name: string;
   messages: Message[];
+  createdAt: Date;
 }
 
 const db = new Dexie("breakpoints-db") as Dexie & {

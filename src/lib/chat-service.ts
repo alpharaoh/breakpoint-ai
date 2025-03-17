@@ -3,7 +3,12 @@ import { Message } from "ai";
 import { v4 as uuidv4 } from "uuid";
 
 export const createThread = async (name: string, messages: Message[]) => {
-  const id = await db.threads.add({ id: uuidv4(), name, messages });
+  const id = await db.threads.add({
+    id: uuidv4(),
+    name,
+    messages,
+    createdAt: new Date(),
+  });
 
   return id;
 };
@@ -13,7 +18,12 @@ export const upsertThread = async (
   name: string,
   messages: Message[],
 ) => {
-  await db.threads.put({ id, name, messages });
+  const thread = await db.threads.get(id);
+  if (thread) {
+    await db.threads.update(id, { name, messages });
+    return;
+  }
+  await db.threads.put({ id, name, messages, createdAt: new Date() });
 };
 
 export const deleteThread = async (id: string) => {

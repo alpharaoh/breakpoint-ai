@@ -39,7 +39,7 @@ export const Assistant: FC<AssistantProps> = ({ initialMessages }) => {
           <ThreadList />
         </ResizablePanel>
         <ResizableHandle className="opacity-0" />
-        <ResizablePanel className="h-full rounded-md">
+        <ResizablePanel className="h-full rounded-md" defaultSize={90}>
           <Thread />
         </ResizablePanel>
       </ResizablePanelGroup>
