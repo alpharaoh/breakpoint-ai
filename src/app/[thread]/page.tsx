@@ -48,10 +48,6 @@ export default function Thread() {
     );
   }
 
-  if (!currentThread) {
-    notFound();
-  }
-
   const initialMessages: ThreadMessageLike[] =
     currentThread?.messages?.map((message) => ({
       id: message.id,

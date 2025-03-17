@@ -13,6 +13,7 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { deleteThread, getThreads } from "@/lib/chat-service";
 import { usePathname, useRouter } from "next/navigation";
 import { getThreadId } from "@/lib/get-thread-id";
+import { v4 as uuidv4 } from "uuid";
 
 export const ThreadList: FC = () => {
   return (
@@ -85,7 +86,7 @@ const ThreadListItemArchive: FC<{ id: string }> = ({ id }) => {
 
     const currentThreadId = getThreadId(pathname);
     if (currentThreadId === id) {
-      router.replace("/");
+      router.replace(`/${uuidv4()}`);
     }
   };
 

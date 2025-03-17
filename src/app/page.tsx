@@ -1,9 +1,6 @@
-import { Assistant } from "@/app/assistant";
+import { redirect } from "next/navigation";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Home() {
-  return (
-    <div className="bg-primary-foreground h-screen">
-      <Assistant />
-    </div>
-  );
+  return redirect(`/${uuidv4()}`);
 }
