@@ -2,7 +2,7 @@
 import { Assistant } from "@/app/assistant";
 
 import { ThreadMessageLike } from "@assistant-ui/react";
-import { usePathname } from "next/navigation";
+import { notFound, usePathname } from "next/navigation";
 import { getThreadId } from "@/lib/get-thread-id";
 import { getThread, upsertThread } from "@/lib/chat-service";
 import { type Thread } from "@/lib/db";
@@ -49,7 +49,7 @@ export default function Thread() {
   }
 
   if (!currentThread) {
-    return <div>Thread not found</div>;
+    notFound();
   }
 
   const initialMessages: ThreadMessageLike[] =
