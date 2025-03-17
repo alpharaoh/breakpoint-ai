@@ -1,4 +1,4 @@
-# Breakpoint AI: The Software Engineering Mentor
+# Breakpoint AI: Your engineering growth partner
 
 Check it out here: https://breakpoint-ai.vercel.app/
 
